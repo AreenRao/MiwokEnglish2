@@ -3,6 +3,7 @@ package com.example.regiment.miwokenglish;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -38,6 +39,8 @@ public class CustomArrayAdapter extends ArrayAdapter<Word> {
                     R.layout.list_item, parent, false);
         }
 
+        //final MediaPlayer mediaPlayer = MediaPlayer.create(getContext(), word.getAudio());
+
         TextView defaultText = (TextView) listItemView.findViewById(R.id.text_english);
         defaultText.setText(word.getDefaultTranslation());
 
@@ -45,12 +48,20 @@ public class CustomArrayAdapter extends ArrayAdapter<Word> {
         miwokText.setText(word.getMiwokTranslation());
 
         ImageView img = (ImageView) listItemView.findViewById(R.id.image_count);
+        if(word.hasImage()){ img.setImageResource(word.getImageSourceId()); }
+        else{ img.setVisibility(View.GONE); }
 
-        if(word.hasImage()){
-            img.setImageResource(word.getImageSourceId());
-        }else{
-            img.setVisibility(View.GONE);
-        }
+
+        ImageView playButtonImage = (ImageView) listItemView.findViewById(R.id.play_button_icon_id);
+        playButtonImage.setImageResource(R.drawable.play_button_icon);
+        /*
+        playButtonImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mediaPlayer.start();
+            }
+        });
+        */
 
         listItemView.findViewById(R.id.list_text_id).setBackgroundColor(ContextCompat.getColor(getContext(), backgroundColor));
 
